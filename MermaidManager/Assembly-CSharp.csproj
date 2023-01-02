@@ -41,6 +41,8 @@
      <Compile Include="Assets\Scripts\Product_Option.cs" />
      <Compile Include="Assets\Scripts\Product.cs" />
      <Compile Include="Assets\Scripts\Util\JH_Util.cs" />
+     <Compile Include="Assets\Scripts\Controller\PopupController.cs" />
+     <Compile Include="Assets\Scripts\UI\UIButton_Option.cs" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.4f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>

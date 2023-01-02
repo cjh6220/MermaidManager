@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DBManager : SingletonBase<DBManager>
 {
-    List<Product> ProductList;
+    List<Product> ProductList = new List<Product>();
     int LastProductIdx;
 
     private void Start() 
@@ -19,7 +19,13 @@ public class DBManager : SingletonBase<DBManager>
 
     void SaveFile()
     {
-
+        for (int i = 0; i < ProductList.Count; i++)
+        {
+            for (int a = 0; a < ProductList[i].Products.Count; a++)
+            {
+                Debug.Log("ID = " + ProductList[i].Products[a].Id + " / Name = " + ProductList[i].Products[a].Name + " / Option_Id = " + ProductList[i].Products[a].Option_Id + " / Option_Name = " + ProductList[i].Products[a].Option_Name);
+            }
+        }
     }
 
     void LoadFile()
