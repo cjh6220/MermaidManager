@@ -16,8 +16,7 @@ namespace Demo
         public GameObject GetObject(int index)
         {
             if (pool.Count == 0)
-            {
-                Debug.LogError("아이템 생성");
+            {   
                 return Instantiate(item);
             }
             Transform candidate = pool.Pop();
@@ -36,6 +35,7 @@ namespace Demo
 
         public void ProvideData(Transform transform, int idx)
         {
+            Debug.LogError("idx = " + idx);
             transform.SendMessage("ScrollCellIndex", idx);
         }
 

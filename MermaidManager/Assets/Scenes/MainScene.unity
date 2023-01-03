@@ -1426,10 +1426,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 2640, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -1490,9 +1490,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 180135937}
     m_Modifications:
-    - target: {fileID: 1765315715761590992, guid: 9d279e1196aa5a6429022e783be42862, type: 3}
-      propertyPath: totalCount
-      value: 100
+    - target: {fileID: 3025823827301166721, guid: 9d279e1196aa5a6429022e783be42862, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3025823827301166721, guid: 9d279e1196aa5a6429022e783be42862, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5245815976395425619, guid: 9d279e1196aa5a6429022e783be42862, type: 3}
       propertyPath: m_Pivot.x
@@ -1576,18 +1580,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5245815976395425619, guid: 9d279e1196aa5a6429022e783be42862, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5873451914464374067, guid: 9d279e1196aa5a6429022e783be42862, type: 3}
-      propertyPath: totalCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6958800891500835276, guid: 9d279e1196aa5a6429022e783be42862, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6958800891500835276, guid: 9d279e1196aa5a6429022e783be42862, type: 3}
-      propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7577112663466777301, guid: 9d279e1196aa5a6429022e783be42862, type: 3}

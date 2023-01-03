@@ -6,8 +6,6 @@ using Demo;
 
 public class UIPopup_Option : MonoBehaviour
 {
-    public GameObject Obj;
-    public Transform Content;
     public InitOnStart PoolStarter;
 
     private void Start() 
