@@ -36,13 +36,28 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\DBManager.cs" />
-     <Compile Include="Assets\Scripts\SingletonBase.cs" />
-     <Compile Include="Assets\Scripts\Product_Option.cs" />
-     <Compile Include="Assets\Scripts\Product.cs" />
+     <Compile Include="Assets\Demo\Scripts\UI_ControlScene.cs" />
+     <Compile Include="Assets\Demo\Scripts\ScrollIndexCallbackBase.cs" />
      <Compile Include="Assets\Scripts\Util\JH_Util.cs" />
+     <Compile Include="Assets\Scripts\Product_Option.cs" />
+     <Compile Include="Assets\Demo\Scripts\InitOnStartMulti.cs" />
+     <Compile Include="Assets\Demo\Scripts\UI_ControlData.cs" />
+     <Compile Include="Assets\Demo\Scripts\CustomListBank.cs" />
+     <Compile Include="Assets\Demo\Scripts\LoopListBankBase.cs" />
+     <Compile Include="Assets\Demo\Scripts\SizeHelper.cs" />
      <Compile Include="Assets\Scripts\Controller\PopupController.cs" />
+     <Compile Include="Assets\Demo\Scripts\InitOnStart.cs" />
+     <Compile Include="Assets\Scripts\SingletonBase.cs" />
      <Compile Include="Assets\Scripts\UI\UIButton_Option.cs" />
+     <Compile Include="Assets\Demo\Scripts\ScrollIndexCallback2.cs" />
+     <Compile Include="Assets\Scripts\Product.cs" />
+     <Compile Include="Assets\Demo\Scripts\ScrollIndexCallback_Custom.cs" />
+     <Compile Include="Assets\Demo\Scripts\ScrollIndexCallback3.cs" />
+     <Compile Include="Assets\Scripts\UI\UIPopup_Option_Item.cs" />
+     <Compile Include="Assets\Demo\Scripts\SizeHelper2.cs" />
+     <Compile Include="Assets\Demo\Scripts\ScrollIndexCallback1.cs" />
+     <Compile Include="Assets\Scripts\UI\UIPopup_Option.cs" />
+     <Compile Include="Assets\Scripts\DBManager.cs" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.4f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
@@ -706,6 +721,9 @@
     <Reference Include="Unity.VisualScripting.SettingsProvider.Editor">
         <HintPath>C:\CJHProject\MermaidManager\Library\ScriptAssemblies\Unity.VisualScripting.SettingsProvider.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.2D.Sprite.Editor">
+        <HintPath>C:\CJHProject\MermaidManager\Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection">
         <HintPath>C:\CJHProject\MermaidManager\Library\ScriptAssemblies\Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.dll</HintPath>
     </Reference>
@@ -742,17 +760,20 @@
     <Reference Include="Unity.Services.Core.Environments">
         <HintPath>C:\CJHProject\MermaidManager\Library\ScriptAssemblies\Unity.Services.Core.Environments.dll</HintPath>
     </Reference>
+    <Reference Include="LoopScrollRect.Runtime">
+        <HintPath>C:\CJHProject\MermaidManager\Library\ScriptAssemblies\LoopScrollRect.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Timeline.Editor">
         <HintPath>C:\CJHProject\MermaidManager\Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="LoopScrollRect.Editor">
+        <HintPath>C:\CJHProject\MermaidManager\Library\ScriptAssemblies\LoopScrollRect.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TestTools.CodeCoverage.Editor">
         <HintPath>C:\CJHProject\MermaidManager\Library\ScriptAssemblies\Unity.TestTools.CodeCoverage.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualScripting.State">
         <HintPath>C:\CJHProject\MermaidManager\Library\ScriptAssemblies\Unity.VisualScripting.State.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.Sprite.Editor">
-        <HintPath>C:\CJHProject\MermaidManager\Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
