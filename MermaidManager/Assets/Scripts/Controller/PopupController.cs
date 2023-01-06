@@ -13,6 +13,7 @@ public class PopupController : SingletonBase<PopupController>
         var item = PopupList.Find(t => t.name == name);
         if (item != null)
         {
+            item.SetActive(true);
             return item;
         }
         else
@@ -21,6 +22,8 @@ public class PopupController : SingletonBase<PopupController>
             if (obj != null)
             {
                 popup = Instantiate(obj, Vector3.zero, Quaternion.identity, PopupRoot);
+                popup.name = name;
+                popup.transform.localPosition = Vector3.zero;
                 PopupList.Add(popup);
             }
         }

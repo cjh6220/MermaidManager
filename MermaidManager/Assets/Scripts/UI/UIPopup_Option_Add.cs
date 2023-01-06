@@ -1,18 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIPopup_Option_Add : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public Button AddBtn;
+
+    private void Awake()
     {
-        
+        AddBtn.onClick.AddListener(OnClickAddBtn);
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnClickAddBtn()
     {
-        
+        var popup = PopupController.Instance.AddPopup("Popup_AddItem");
     }
 }
