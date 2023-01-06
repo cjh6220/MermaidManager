@@ -60,6 +60,7 @@
      <Compile Include="Assets\Scripts\UI\UIPopup_Option.cs" />
      <Compile Include="Assets\Scripts\DBManager.cs" />
      <Compile Include="Assets\Scripts\UI\UIPopup_AddItem.cs" />
+     <Compile Include="Assets\Scripts\UI\UIPopup_AddItem_Item.cs" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.4f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>

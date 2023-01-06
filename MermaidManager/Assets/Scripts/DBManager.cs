@@ -181,6 +181,18 @@ public class DBManager : SingletonBase<DBManager>
         SaveFile();
     }
 
+    public void AddProduct(Product newItems)
+    {
+        newItems.Id = LastProductIdx + 1;
+        for (int i = 0; i < newItems.Products.Count; i++)
+        {
+            newItems.Products[i].Option_Id = i;
+        }
+
+        ProductList.Add(newItems);
+        SaveFile();
+    }
+
     bool SearchDuplicatedItem(Product_Option Item)
     {
         for (int i = 0; i < ProductList.Count; i++)

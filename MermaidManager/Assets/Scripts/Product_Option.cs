@@ -1,4 +1,4 @@
-public struct Product_Option
+public class Product_Option
 {
     public int Id;
     public string Name;
