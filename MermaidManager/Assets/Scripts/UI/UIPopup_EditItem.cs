@@ -3,33 +3,45 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIPopup_AddItem : MonoBehaviour
+public class UIPopup_EditItem : MonoBehaviour
 {
     public GameObject Obj;
     public Transform Contents;
-    public Button Exit;
+    public Button ExitBtn;
     public InputField ProductName;
     public InputField CountPerBox;
     public InputField CountPerOnce;
     public InputField Price;
     public Button AddBtn;
     public Button SaveBtn;
+    int ItemId;
 
-    private void Awake()
+    private void Start()
     {
-        Exit.onClick.AddListener(OnClickExit);
+        ExitBtn.onClick.AddListener(ClosePopup);
         AddBtn.onClick.AddListener(OnClickAddBtn);
         SaveBtn.onClick.AddListener(OnClickSaveBtn);
     }
 
-    private void OnEnable()
+    public void SetItem(int itemId)
     {
         ClearPopup();
-    }
+        ItemId = itemId;
+        Debug.LogError("UIPopup_EditItem SetItem = " + itemId);
+        var itemInfo = DBManager.Instance.GetProductByID(itemId);
+        if (itemInfo != null)
+        {
+            ProductName.text = itemInfo.Name;
+            CountPerBox.text = itemInfo.Products[0].OneBox_Total_Count.ToString();
+            CountPerOnce.text = itemInfo.Products[0].Person_Per_Count.ToString();
+            Price.text = (itemInfo.Products[0].Person_Per_Price * (itemInfo.Products[0].OneBox_Total_Count / itemInfo.Products[0].Person_Per_Count)).ToString();
 
-    void OnClickExit()
-    {
-        PopupController.Instance.ClosePopup("Popup_AddItem");
+            for (int i = 0; i < itemInfo.Products.Count; i++)
+            {
+                var item = Instantiate(Obj, Contents);
+                item.GetComponent<UIPopup_AddItem_Item>().SetOption(itemInfo.Products[i]);
+            }
+        }
     }
 
     void OnClickAddBtn()
@@ -52,6 +64,7 @@ public class UIPopup_AddItem : MonoBehaviour
     void OnClickSaveBtn()
     {
         var Item = new Product();
+        Item.Id = ItemId;
         var options = Contents.GetComponentsInChildren<UIPopup_AddItem_Item>();
         for (int i = 0; i < options.Length; i++)
         {
@@ -59,27 +72,32 @@ public class UIPopup_AddItem : MonoBehaviour
             option.Name = ProductName.text;
             option.OneBox_Total_Count = int.Parse(CountPerBox.text);
             option.Person_Per_Count = int.Parse(CountPerOnce.text);
+            option.Id = ItemId;
+            option.Option_Id = i;
             Item.Products.Add(option);
         }
-        DBManager.Instance.AddProduct(Item);
+
+        DBManager.Instance.EditProduct(Item);
+
         var optionPopup = PopupController.Instance.GetPopup("Popup_Option");
         if (optionPopup != null)
         {
             optionPopup.GetComponent<UIPopup_Option>().ResetItems();
         }
-        OnClickExit();
+
+        ClosePopup();
     }
 
     void ClearPopup()
     {
-        ProductName.text = "제품명";
-        CountPerBox.text = "0";
-        CountPerOnce.text = "0";
-        Price.text = "0";
-
         while (Contents.childCount > 0)
         {
             DestroyImmediate(Contents.GetChild(0).gameObject);
         }
+    }
+
+    void ClosePopup()
+    {
+        PopupController.Instance.ClosePopup("Popup_EditItem");
     }
 }

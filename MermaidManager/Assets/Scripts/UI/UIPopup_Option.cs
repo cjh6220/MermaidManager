@@ -9,6 +9,7 @@ public class UIPopup_Option : MonoBehaviour
 {
     public Button ExitBtn;
     public InitOnStart PoolStarter;
+    public LoopScrollRect ScrollRect;
 
     private void Awake()
     {
@@ -17,22 +18,33 @@ public class UIPopup_Option : MonoBehaviour
 
     private void Start()
     {
-        //PoolStarter.SetStart(50);
+        SetItems();
     }
 
     void SetItems()
     {
         var items = DBManager.Instance.GetProductList();
         PoolStarter.SetStart(items.Count);
-        // for (int i = 0; i < items.Count; i++)
-        // {
-        //     var item = Instantiate(Obj,Content);
-        //     //item.GetComponent<UIPopup_Option_Item>().SetItem(items[i]);
-        // }
     }
 
     void ClosePopup()
     {
         PopupController.Instance.ClosePopup("Popup_Option");
+    }
+
+    public void ResetItems()
+    {
+        ScrollRect.ClearCells();        
+        SetItems();
+    }
+
+    public void RefreshCells()
+    {
+        ScrollRect.RefreshCells();
+    }
+
+    public void RemoveLastItem()
+    {
+        //ScrollRect.DeleteItemAtEnd();
     }
 }

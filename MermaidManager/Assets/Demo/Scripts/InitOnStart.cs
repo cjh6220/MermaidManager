@@ -35,7 +35,6 @@ namespace Demo
 
         public void ProvideData(Transform transform, int idx)
         {
-            Debug.LogError("idx = " + idx);
             transform.SendMessage("ScrollCellIndex", idx);
         }
 

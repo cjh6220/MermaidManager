@@ -40,4 +40,16 @@ public class PopupController : SingletonBase<PopupController>
             }
         }
     }
+
+    public GameObject GetPopup(string name)
+    {
+        for (int i = 0; i < PopupList.Count; i++)
+        {
+            if (PopupList[i].name == name)
+            {
+                return PopupList[i];
+            }
+        }
+        return null;
+    }
 }

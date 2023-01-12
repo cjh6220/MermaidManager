@@ -6,11 +6,13 @@ using Newtonsoft.Json;
 
 public class DBManager : SingletonBase<DBManager>
 {
-    List<Product> ProductList = new List<Product>();
+    public List<Product> ProductList = new List<Product>();
+    [SerializeField]
     int LastProductIdx;
+    [SerializeField]
     int LastClientIdx;
 
-    private void Start() 
+    private void Start()
     {
         GetProductTable();
     }
@@ -22,12 +24,17 @@ public class DBManager : SingletonBase<DBManager>
 
     void SaveFile()
     {
+        int lastProductIdx = 0;
         var productOptions = new List<Product_Option>();
         for (int i = 0; i < ProductList.Count; i++)
         {
             for (int a = 0; a < ProductList[i].Products.Count; a++)
             {
                 productOptions.Add(ProductList[i].Products[a]);
+                if (ProductList[i].Products[a].Id > lastProductIdx)
+                {
+                    lastProductIdx = ProductList[i].Products[a].Id;
+                }
                 Debug.Log("ID = " + ProductList[i].Products[a].Id + " / Name = " + ProductList[i].Products[a].Name + " / Option_Id = " + ProductList[i].Products[a].Option_Id + " / Option_Name = " + ProductList[i].Products[a].Option_Name);
             }
         }
@@ -38,20 +45,21 @@ public class DBManager : SingletonBase<DBManager>
         File.WriteAllText(Application.persistentDataPath + "/ProductDB.json", str);
 #endif
 
-//         var clientStr = JsonConvert.SerializeObject(_userData.ClientList);
-// #if UNITY_EDITOR
-//         File.WriteAllText(Application.dataPath + "/ClientDB.json", clientStr);
-// #else
-//         File.WriteAllText(Application.persistentDataPath + "/ClientDB.json", clientStr);
-// #endif
+        //         var clientStr = JsonConvert.SerializeObject(_userData.ClientList);
+        // #if UNITY_EDITOR
+        //         File.WriteAllText(Application.dataPath + "/ClientDB.json", clientStr);
+        // #else
+        //         File.WriteAllText(Application.persistentDataPath + "/ClientDB.json", clientStr);
+        // #endif
 
-//         PlayerPrefs.SetInt("LastIdx", _userData.LastIdx);
-//         PlayerPrefs.SetInt("LastProductIdx", _userData.LastProductIdx);
+        PlayerPrefs.SetInt("LastProductIdx", lastProductIdx);
+        LastProductIdx = lastProductIdx;
+        //         PlayerPrefs.SetInt("LastProductIdx", _userData.LastProductIdx);
     }
 
     void LoadFile()
     {
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         Debug.Log("LoadJson Editor");
         if (File.Exists(Application.dataPath + "/ProductDB.json")) //상품 파일 있을때
         {
@@ -168,9 +176,9 @@ public class DBManager : SingletonBase<DBManager>
                     newOption.Option_Name = newItems[i].Option_Name;
                     newOption.OneBox_Total_Count = newItems[i].OneBox_Total_Count;
                     newOption.Person_Per_Count = newItems[i].Person_Per_Count;
-                    newOption.Total_Box = newItems[i].Total_Box;
-                    newOption.Sell_Count = newItems[i].Sell_Count;
-                    newOption.Error_Count = newItems[i].Error_Count;
+                    //newOption.Total_Box = newItems[i].Total_Box;
+                    //newOption.Sell_Count = newItems[i].Sell_Count;
+                    //newOption.Error_Count = newItems[i].Error_Count;
                     newOption.Person_Per_Price = newItems[i].Person_Per_Price;
 
                     newProduct.Products.Add(newOption);
@@ -184,12 +192,38 @@ public class DBManager : SingletonBase<DBManager>
     public void AddProduct(Product newItems)
     {
         newItems.Id = LastProductIdx + 1;
+        newItems.Name = newItems.Products[0].Name;
         for (int i = 0; i < newItems.Products.Count; i++)
         {
+            newItems.Products[i].Id = newItems.Id;
             newItems.Products[i].Option_Id = i;
         }
 
         ProductList.Add(newItems);
+        SaveFile();
+    }
+
+    public void EditProduct(Product newItems)
+    {
+        var target = ProductList.Find(t => t.Id == newItems.Id);
+        if (target != null)
+        {
+            target.Products = newItems.Products;
+        }
+        else
+        {
+            Debug.LogError("기존 물품 데이터가 없음");
+        }
+        SaveFile();
+    }
+
+    public void RemoveProductByID(int ID)
+    {
+        var target = ProductList.Find(t => t.Id == ID);
+        if (target != null)
+        {
+            ProductList.Remove(target);
+        }
         SaveFile();
     }
 
@@ -210,5 +244,23 @@ public class DBManager : SingletonBase<DBManager>
     public List<Product> GetProductList()
     {
         return ProductList;
+    }
+
+    public Product GetProductByOrder(int order)
+    {
+        if (order >= ProductList.Count)
+        {
+            return null;
+        }
+        else
+        {
+            return ProductList[order];
+        }
+    }
+
+    public Product GetProductByID(int ID)
+    {
+        var target = ProductList.Find(t => t.Id == ID);
+        return target;
     }
 }

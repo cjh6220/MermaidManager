@@ -878,9 +878,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 675666818125572959}
-  - component: {fileID: 7229837476763314319}
+  - component: {fileID: 6700565180962145460}
   m_Layer: 5
-  m_Name: Popup_AddItem
+  m_Name: Popup_EditItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -910,7 +910,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7229837476763314319
+--- !u!114 &6700565180962145460
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -919,12 +919,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 3250605377002571054}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f7fb8ddd0189c54086e506a6754e8cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 9c81e6575fbb23145877e634127de46a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Obj: {fileID: 7456473660974516271, guid: 562fd98c3a9e3b2498b71c5fa2de76e4, type: 3}
   Contents: {fileID: 3700075467649407807}
-  Exit: {fileID: 9002645346841444331}
+  ExitBtn: {fileID: 9002645346841444331}
   ProductName: {fileID: 8463889769107630477}
   CountPerBox: {fileID: 190691650267787582}
   CountPerOnce: {fileID: 3138708864045656455}
@@ -1738,7 +1738,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Content: {fileID: 3700075467649407807}
-  m_Horizontal: 1
+  m_Horizontal: 0
   m_Vertical: 1
   m_MovementType: 1
   m_Elasticity: 0.1
