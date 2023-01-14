@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using Newtonsoft.Json;
+using System;
 
 public class DBManager : SingletonBase<DBManager>
 {
     public List<Product> ProductList = new List<Product>();
+    public List<Data_Client> ClientList = new List<Data_Client>();
+    public Product SelectedProduct = new Product();
+    public Data_Client_History SelectedHistory = new Data_Client_History();
     [SerializeField]
     int LastProductIdx;
     [SerializeField]
@@ -45,16 +49,52 @@ public class DBManager : SingletonBase<DBManager>
         File.WriteAllText(Application.persistentDataPath + "/ProductDB.json", str);
 #endif
 
-        //         var clientStr = JsonConvert.SerializeObject(_userData.ClientList);
-        // #if UNITY_EDITOR
-        //         File.WriteAllText(Application.dataPath + "/ClientDB.json", clientStr);
-        // #else
-        //         File.WriteAllText(Application.persistentDataPath + "/ClientDB.json", clientStr);
-        // #endif
+        var clientStr = JsonConvert.SerializeObject(ClientList);
+#if UNITY_EDITOR
+        File.WriteAllText(Application.dataPath + "/ClientDB.json", clientStr);
+#else
+        File.WriteAllText(Application.persistentDataPath + "/ClientDB.json", clientStr);
+#endif
 
         PlayerPrefs.SetInt("LastProductIdx", lastProductIdx);
         LastProductIdx = lastProductIdx;
-        //         PlayerPrefs.SetInt("LastProductIdx", _userData.LastProductIdx);
+        //PlayerPrefs.SetInt("LastProductIdx", _userData.LastProductIdx);
+    }
+
+    void SaveProduct()
+    {
+        int lastProductIdx = 0;
+        var productOptions = new List<Product_Option>();
+        for (int i = 0; i < ProductList.Count; i++)
+        {
+            for (int a = 0; a < ProductList[i].Products.Count; a++)
+            {
+                productOptions.Add(ProductList[i].Products[a]);
+                if (ProductList[i].Products[a].Id > lastProductIdx)
+                {
+                    lastProductIdx = ProductList[i].Products[a].Id;
+                }
+                Debug.Log("ID = " + ProductList[i].Products[a].Id + " / Name = " + ProductList[i].Products[a].Name + " / Option_Id = " + ProductList[i].Products[a].Option_Id + " / Option_Name = " + ProductList[i].Products[a].Option_Name);
+            }
+        }
+        var str = JsonConvert.SerializeObject(productOptions);
+#if UNITY_EDITOR
+        File.WriteAllText(Application.dataPath + "/ProductDB.json", str);
+#else
+        File.WriteAllText(Application.persistentDataPath + "/ProductDB.json", str);
+#endif
+        PlayerPrefs.SetInt("LastProductIdx", lastProductIdx);
+        LastProductIdx = lastProductIdx;
+    }
+
+    void SaveClient()
+    {
+        var clientStr = JsonConvert.SerializeObject(ClientList);
+#if UNITY_EDITOR
+        File.WriteAllText(Application.dataPath + "/ClientDB.json", clientStr);
+#else
+        File.WriteAllText(Application.persistentDataPath + "/ClientDB.json", clientStr);
+#endif
     }
 
     void LoadFile()
@@ -93,7 +133,7 @@ public class DBManager : SingletonBase<DBManager>
             //     _userData.ProductList = new List<Product>();
             // }
 
-            LastClientIdx = PlayerPrefs.GetInt("LastIdx");
+            //LastClientIdx = PlayerPrefs.GetInt("LastIdx");
             LastProductIdx = PlayerPrefs.GetInt("LastProductIdx");
         }
         else
@@ -103,39 +143,37 @@ public class DBManager : SingletonBase<DBManager>
             PlayerPrefs.SetInt("LastProductIdx", 0);
         }
 
-        // if (File.Exists(Application.dataPath + "/ClientDB.json"))
-        // {
-        //     var jsonStrRead_Client = File.ReadAllText(Application.dataPath + "/ClientDB.json");
-        //     var deserializedBarList_Client = JsonConvert.DeserializeObject<List<Data_Client>>(jsonStrRead_Client);
-        //     _userData.ClientList = deserializedBarList_Client;
-        //     if (_userData.ClientList == null)
-        //     {
-        //         _userData.ClientList = new List<Data_Client>();
-        //     }
-        // }
-        // else
-        // {
-        //     File.WriteAllText(Application.dataPath + "/ClientDB.json", "");
-        // }
+        if (File.Exists(Application.dataPath + "/ClientDB.json"))
+        {
+            var jsonStrRead_Client = File.ReadAllText(Application.dataPath + "/ClientDB.json");
+            var deserializedBarList_Client = JsonConvert.DeserializeObject<List<Data_Client>>(jsonStrRead_Client);
+            ClientList = deserializedBarList_Client;
+            if (ClientList == null)
+            {
+                ClientList = new List<Data_Client>();
+            }
+        }
+        else
+        {
+            File.WriteAllText(Application.dataPath + "/ClientDB.json", "");
+        }
 #else 
         Debug.Log("LoadJson Android");
         if (File.Exists(Application.persistentDataPath + "/ProductDB.json"))
         {
             var jsonStrRead = File.ReadAllText(Application.persistentDataPath + "/ProductDB.json");
-            var deserializedBarList = JsonConvert.DeserializeObject<List<Product>>(jsonStrRead);
-            _userData.ProductList = deserializedBarList;
-            if (_userData.ProductList == null)
+            var deserializedBarList = JsonConvert.DeserializeObject<List<Product_Option>>(jsonStrRead);
+            ProductListProductList = deserializedBarList;
+            if (ProductListProductList == null)
             {
-                _userData.ProductList = new List<Product>();
+                ProductList = new List<Product_Option>();
             }
-
-            _userData.LastIdx = PlayerPrefs.GetInt("LastIdx");
-            _userData.LastProductIdx = PlayerPrefs.GetInt("LastProductIdx");
+            
+            LastProductIdx = PlayerPrefs.GetInt("LastProductIdx");
         }
         else
         {
-            File.WriteAllText(Application.persistentDataPath + "/ProductDB.json", "");
-            PlayerPrefs.SetInt("LastIdx", 0);
+            File.WriteAllText(Application.persistentDataPath + "/ProductDB.json", "");            
             PlayerPrefs.SetInt("LastProductIdx", 0);
         }
 
@@ -143,10 +181,10 @@ public class DBManager : SingletonBase<DBManager>
         {
             var jsonStrRead_Client = File.ReadAllText(Application.persistentDataPath + "/ClientDB.json");
             var deserializedBarList_Client = JsonConvert.DeserializeObject<List<Data_Client>>(jsonStrRead_Client);
-            _userData.ClientList = deserializedBarList_Client;
-            if (_userData.ClientList == null)
+            ClientList = deserializedBarList_Client;
+            if (ClientList == null)
             {
-                _userData.ClientList = new List<Data_Client>();
+                ClientList = new List<Data_Client>();
             }
         }
         else
@@ -186,7 +224,7 @@ public class DBManager : SingletonBase<DBManager>
                 ProductList.Add(newProduct);
             }
         }
-        SaveFile();
+        SaveProduct();
     }
 
     public void AddProduct(Product newItems)
@@ -200,7 +238,7 @@ public class DBManager : SingletonBase<DBManager>
         }
 
         ProductList.Add(newItems);
-        SaveFile();
+        SaveProduct();
     }
 
     public void EditProduct(Product newItems)
@@ -214,7 +252,7 @@ public class DBManager : SingletonBase<DBManager>
         {
             Debug.LogError("기존 물품 데이터가 없음");
         }
-        SaveFile();
+        SaveProduct();
     }
 
     public void RemoveProductByID(int ID)
@@ -224,7 +262,7 @@ public class DBManager : SingletonBase<DBManager>
         {
             ProductList.Remove(target);
         }
-        SaveFile();
+        SaveProduct();
     }
 
     bool SearchDuplicatedItem(Product_Option Item)
@@ -262,5 +300,121 @@ public class DBManager : SingletonBase<DBManager>
     {
         var target = ProductList.Find(t => t.Id == ID);
         return target;
+    }
+
+    public List<Data_Client> GetClientBtName(string name)
+    {
+        var target = ClientList.FindAll(t => t.Client_Name == name);
+        return target;
+    }
+
+    public void AddNewClient(Data_Client data)
+    {
+        var search = ClientList.FindAll(t => t.Client_Name == data.Client_Name && t.NickName == data.NickName);
+        if (search.Count <= 0)
+        {
+            ClientList.Add(data);
+            SaveClient();
+        }
+    }
+
+    public void SaveClientProduct(Data_Client client, List<Data_Selected_Option> optionList)
+    {
+        var item = ClientList.Find(t => t.Client_Name == client.Client_Name && t.NickName == client.NickName);
+        if (item != null)
+        {
+            var newProducts = new Data_Client_Product_History();
+            newProducts.Date = DateTime.Now;
+            newProducts.ProductList = optionList;
+#if UNITY_EDITOR
+            if (File.Exists(Application.dataPath + "/ClientData/" + client.Client_Name + "~" + client.NickName + ".json"))//고객 정보 있을때
+            {
+                var jsonStrRead = File.ReadAllText(Application.dataPath + "/ClientData/" + client.Client_Name + "~" + client.NickName + ".json");
+                var deserializedBarList = JsonConvert.DeserializeObject<Data_Client_History>(jsonStrRead);
+                deserializedBarList.History.Add(newProducts);
+                Sort(deserializedBarList);
+
+                var clientStr = JsonConvert.SerializeObject(deserializedBarList);
+                File.WriteAllText(Application.dataPath + "/ClientData/" + client.Client_Name + "~" + client.NickName + ".json", clientStr);
+            }
+            else //고객 정보 없을때
+            {
+                var newClient = new Data_Client_History();
+                newClient.Client = client;
+                newClient.History.Add(newProducts);
+
+                var clientStr = JsonConvert.SerializeObject(newClient);
+                if (!File.Exists(Application.dataPath + "/ClientData"))
+                {
+                    Directory.CreateDirectory(Application.dataPath + "/ClientData");
+                }
+                File.WriteAllText(Application.dataPath + "/ClientData/" + client.Client_Name + "~" + client.NickName + ".json", clientStr);
+            }
+#else
+            if (File.Exists(Application.persistentDataPath + "/ClientData/" + client.Client_Name + "~" + client.NickName + ".json"))//고객 정보 있을때
+            {
+                var jsonStrRead = File.ReadAllText(Application.persistentDataPath + "/ClientData/" + client.Client_Name + "~" + client.NickName + ".json");
+                var deserializedBarList = JsonConvert.DeserializeObject<Data_Client_History>(jsonStrRead);
+                deserializedBarList.History.Add(newProducts);
+                Sort(deserializedBarList);
+
+                var clientStr = JsonConvert.SerializeObject(deserializedBarList);
+                File.WriteAllText(Application.persistentDataPath + "/ClientData/" + client.Client_Name + "~" + client.NickName + ".json", clientStr);
+            }
+            else //고객 정보 없을때
+            {
+                var newClient = new Data_Client_History();
+                newClient.Client = client;
+                newClient.History.Add(newProducts);
+
+                var clientStr = JsonConvert.SerializeObject(newClient);
+                if (!File.Exists(Application.persistentDataPath + "/ClientData"))
+                {
+                    Directory.CreateDirectory(Application.persistentDataPath + "/ClientData");
+                }                
+                File.WriteAllText(Application.persistentDataPath + "/ClientData/" + client.Client_Name + "~" + client.NickName + ".json", clientStr);    
+            }
+#endif
+        }
+    }
+
+    public Data_Client_History LoadClientHistory(Data_Client data)
+    {
+#if UNITY_EDITOR
+        if (File.Exists(Application.dataPath + "/ClientData/" + data.Client_Name + "~" + data.NickName + ".json"))
+        {
+            var jsonStrRead = File.ReadAllText(Application.dataPath + "/ClientData/" + data.Client_Name + "~" + data.NickName + ".json");
+            var deserializedBarList = JsonConvert.DeserializeObject<Data_Client_History>(jsonStrRead);
+            Sort(deserializedBarList);
+            SelectedHistory = deserializedBarList;
+            return deserializedBarList;
+        }
+#else
+        if (File.Exists(Application.persistentDataPath + "/ClientData/" + data.Client_Name + "~" + data.NickName + ".json"))
+        {
+            var jsonStrRead = File.ReadAllText(Application.persistentDataPath + "/ClientData/" + data.Client_Name + "~" + data.NickName + ".json");
+            var deserializedBarList = JsonConvert.DeserializeObject<Data_Client_History>(jsonStrRead);
+            Sort(deserializedBarList);
+            SelectedHistory = deserializedBarList;
+            return deserializedBarList;
+        }
+#endif
+        else
+        {
+            return null;
+        }
+    }
+
+    void Sort(Data_Client_History data)
+    {
+        data.History.Sort((char1, char2) =>
+        {
+            var check1 = char1;
+            var check2 = char2;
+
+            var value = check2.Date.CompareTo(check1.Date);
+
+            return value;
+        });
     }
 }

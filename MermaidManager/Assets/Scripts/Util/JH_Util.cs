@@ -24,4 +24,11 @@ public class JH_Util
             return idx + 1;
         }
     }
+
+    public static string TransIntToWon(int Price)
+    {
+        var str = "";
+        str = string.Format("{0:0,0}", Price)  + "₩";
+        return str;
+    }
 }

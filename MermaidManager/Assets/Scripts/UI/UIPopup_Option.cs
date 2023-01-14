@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Demo;
-using UnityEngine.UI;
 
 public class UIPopup_Option : MonoBehaviour
 {
