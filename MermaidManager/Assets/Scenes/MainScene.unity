@@ -307,13 +307,14 @@ GameObject:
   - component: {fileID: 291145482}
   - component: {fileID: 291145481}
   - component: {fileID: 291145480}
+  - component: {fileID: 291145483}
   m_Layer: 5
   m_Name: Mail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &291145479
 RectTransform:
   m_ObjectHideFlags: 0
@@ -416,6 +417,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 291145478}
   m_CullTransparentMesh: 1
+--- !u!114 &291145483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 291145478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 121866ae7814889409ae9987c667b097, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MailBtn: {fileID: 291145480}
 --- !u!1 &490645178
 GameObject:
   m_ObjectHideFlags: 0
@@ -797,6 +811,7 @@ GameObject:
   - component: {fileID: 959115095}
   - component: {fileID: 959115094}
   - component: {fileID: 959115093}
+  - component: {fileID: 959115096}
   m_Layer: 5
   m_Name: Calender
   m_TagString: Untagged
@@ -906,6 +921,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 959115091}
   m_CullTransparentMesh: 1
+--- !u!114 &959115096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959115091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c3c8a9979d710e4c83d3bd18d91ec7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CalenderBtn: {fileID: 959115093}
 --- !u!1 &1030415479
 GameObject:
   m_ObjectHideFlags: 0

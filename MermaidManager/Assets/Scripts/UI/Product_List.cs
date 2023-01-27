@@ -19,4 +19,10 @@ public class Product_List : MonoBehaviour
         var items = DBManager.Instance.GetProductList();
         PoolStarter.SetStart(items.Count);
     }
+
+    public void UpdateItems()
+    {
+        ScrollRect.ClearCells();
+        SetItems();
+    }
 }

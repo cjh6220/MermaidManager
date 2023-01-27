@@ -14,6 +14,7 @@ public class PopupController : SingletonBase<PopupController>
         if (item != null)
         {
             item.SetActive(true);
+            item.transform.SetAsLastSibling();
             return item;
         }
         else

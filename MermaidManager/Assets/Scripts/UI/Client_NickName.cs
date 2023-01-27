@@ -25,7 +25,7 @@ public class Client_NickName : MonoBehaviour
         SetClientList(clientName);
     }
 
-    void SetClientList(string name)
+    public void SetClientList(string name)
     {
         ClearAllItem();
         var targets = DBManager.Instance.GetClientBtName(name);

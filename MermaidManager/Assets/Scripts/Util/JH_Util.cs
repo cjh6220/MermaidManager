@@ -28,7 +28,7 @@ public class JH_Util
     public static string TransIntToWon(int Price)
     {
         var str = "";
-        str = string.Format("{0:0,0}", Price)  + "₩";
+        str += string.Format("{0:0,0}", Price)  + "₩";
         return str;
     }
 }

@@ -5,10 +5,13 @@ using UnityEngine.UI;
 
 public class UIPopup_Start : MonoBehaviour
 {
+    public Product_List Product_List;
     public Product_Option_List Option_List;
     public UIPopup_Start_History History;
     public GameObject SelectedObj;
     public Button Exit;
+    public Button RefreshBtn;
+    public Button EditProductBtn;
     public Transform Content;
     public Button ConfirmBtn;
     public Button ResetBtn;
@@ -21,7 +24,9 @@ public class UIPopup_Start : MonoBehaviour
 
     private void Start()
     {
+        RefreshBtn.onClick.AddListener(OnClickRefresh);
         Exit.onClick.AddListener(OnClickClose);
+        EditProductBtn.onClick.AddListener(OnClickEditProduct);
         ClientSearch.onClick.AddListener(SearchClient);
         ConfirmBtn.onClick.AddListener(OnClickConfirm);
         ResetBtn.onClick.AddListener(OnClickReset);
@@ -109,16 +114,30 @@ public class UIPopup_Start : MonoBehaviour
         }
     }
 
+    void OnClickRefresh()
+    {
+        Product_List.UpdateItems();
+        DBManager.Instance.SelectedProduct = null;
+        Option_List.ClearAllOption();
+    }
+
+    void OnClickEditProduct()
+    {
+        PopupController.Instance.AddPopup("Popup_Option");
+    }
+
     void OnClickConfirm()
     {
+        if (SelectedOption.Count <= 0) return;
+        
         DBManager.Instance.SaveClientProduct(currentClient, SelectedOption);
         OnClickReset();
         Option_List.ClearAllOption();
         DBManager.Instance.SelectedProduct = null;
         currentClient = null;
         CalTotalPrice();
-        ClientNickName.text = "0₩";
-        ClientName.text = "고객 명";
+        ClientNickName.text = "";
+        ClientName.text = "";
     }
 
     void OnClickReset()

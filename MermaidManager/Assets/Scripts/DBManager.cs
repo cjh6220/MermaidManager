@@ -163,12 +163,28 @@ public class DBManager : SingletonBase<DBManager>
         {
             var jsonStrRead = File.ReadAllText(Application.persistentDataPath + "/ProductDB.json");
             var deserializedBarList = JsonConvert.DeserializeObject<List<Product_Option>>(jsonStrRead);
-            ProductListProductList = deserializedBarList;
-            if (ProductListProductList == null)
+            var tableProducts = new List<Product>();
+            if (deserializedBarList != null)
             {
-                ProductList = new List<Product_Option>();
+                for (int i = 0; i < deserializedBarList.Count; i++)
+                {
+                    var item = tableProducts.Find(t => t.Id == deserializedBarList[i].Id);
+                    if (item != null) //이미 저장됨
+                    {
+                        item.Products.Add(deserializedBarList[i]);
+                    }
+                    else
+                    {
+                        var newProduct = new Product();
+                        newProduct.Id = deserializedBarList[i].Id;
+                        newProduct.Name = deserializedBarList[i].Name;
+                        newProduct.Products.Add(deserializedBarList[i]);
+
+                        tableProducts.Add(newProduct);
+                    }
+                }
             }
-            
+            ProductList = tableProducts;
             LastProductIdx = PlayerPrefs.GetInt("LastProductIdx");
         }
         else
@@ -318,8 +334,22 @@ public class DBManager : SingletonBase<DBManager>
         }
     }
 
+    public void RemoveClient(Data_Client data)
+    {
+        var search = ClientList.Find(t => t.Client_Name == data.Client_Name && t.NickName == data.NickName);
+        if (search != null)
+        {
+            ClientList.Remove(search);
+            SaveClient();
+        }
+    }
+
     public void SaveClientProduct(Data_Client client, List<Data_Selected_Option> optionList)
     {
+        for (int i = 0; i < optionList.Count; i++)
+        {
+            Debug.LogError(i + "번째 물건 = " + optionList[i].Option.Name + " / 옵션명 = " + optionList[i].Option.Option_Name);
+        }
         var item = ClientList.Find(t => t.Client_Name == client.Client_Name && t.NickName == client.NickName);
         if (item != null)
         {
