@@ -431,6 +431,7 @@ public class DBManager : SingletonBase<DBManager>
 #endif
         else
         {
+            SelectedHistory = new Data_Client_History();
             return null;
         }
     }
