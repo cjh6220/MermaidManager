@@ -21,7 +21,7 @@ public class Client_NickName : MonoBehaviour
     public void SetClient(string clientName)
     {
         ClientName.text = clientName;
-        ClientNickName.text = "닉네임 입력";
+        ClientNickName.text = "";
         SetClientList(clientName);
     }
 
@@ -46,7 +46,7 @@ public class Client_NickName : MonoBehaviour
 
     void OnClickAddNickName()
     {
-        if(ClientNickName.text == "닉네임 입력") return;
+        if(ClientNickName.text == "") return;
 
         var newClient = new Data_Client();
         newClient.Client_Name = ClientName.text;
