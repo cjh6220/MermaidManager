@@ -72,7 +72,7 @@ public class UIPopup_AddItem : MonoBehaviour
 
     void ClearPopup()
     {
-        ProductName.text = "제품명";
+        ProductName.text = "";
         CountPerBox.text = "0";
         CountPerOnce.text = "0";
         Price.text = "0";
