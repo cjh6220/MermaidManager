@@ -5,6 +5,7 @@ using System.IO;
 using Newtonsoft.Json;
 using System;
 
+
 public class DBManager : SingletonBase<DBManager>
 {
     public List<Product> ProductList = new List<Product>();
@@ -152,6 +153,7 @@ public class DBManager : SingletonBase<DBManager>
             {
                 ClientList = new List<Data_Client>();
             }
+            Debug.LogError("File.Exists = " + jsonStrRead_Client);
         }
         else
         {
