@@ -86,6 +86,7 @@ public class DBManager : SingletonBase<DBManager>
 #endif
         PlayerPrefs.SetInt("LastProductIdx", lastProductIdx);
         LastProductIdx = lastProductIdx;
+        
     }
 
     void SaveClient()
@@ -210,7 +211,7 @@ public class DBManager : SingletonBase<DBManager>
             File.WriteAllText(Application.persistentDataPath + "/ClientDB.json", "");
         }
 #endif
-
+        //Debug.LogError("LastProductIdx = " + LastProductIdx);
         //SendMessage(MessageID.Event_Set_Log, "DB Load Success");
     }
 

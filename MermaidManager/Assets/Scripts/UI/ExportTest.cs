@@ -48,9 +48,6 @@ public class ExportTest : MonoBehaviour
 
     public void OnClickClientHistoryExport()
     {
-#if UNITY_EDITOR
-        GetHistory();
-#endif
         string mailto = "cjh6220@gmail.com";
 
         string subject = EscapeURL("고객 히스토리 정보 / " + DateTime.Now.ToString("yyyy/MM/dd"));
@@ -76,6 +73,7 @@ public class ExportTest : MonoBehaviour
 #if UNITY_EDITOR
         var test = new DirectoryInfo(Application.dataPath + "/ClientData");
         var targets = test.GetFiles("*json");
+        Debug.LogError("Targets Count = " + targets.Length);
         for (int i = 0; i < targets.Length; i++)
         {
             var jsonStrRead = File.ReadAllText(Application.dataPath + "/ClientData/" + targets[i].Name);
@@ -85,6 +83,7 @@ public class ExportTest : MonoBehaviour
 #else
         var test = new DirectoryInfo(Application.persistentDataPath+"/ClientData");
         var targets = test.GetFiles("*json");
+        Debug.LogError("Targets Count = " + targets.Length);
         for (int i = 0; i < targets.Length; i++)
         {
             var jsonStrRead = File.ReadAllText(Application.persistentDataPath + "/ClientData/" + targets[i].Name);
