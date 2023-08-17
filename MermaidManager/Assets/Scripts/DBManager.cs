@@ -11,6 +11,7 @@ public class DBManager : SingletonBase<DBManager>
     public List<Product> ProductList = new List<Product>();
     public List<Data_Client> ClientList = new List<Data_Client>();
     public Product SelectedProduct = new Product();
+    public GameObject ImportBtn;
     public Data_Client_History SelectedHistory = new Data_Client_History();
     [SerializeField]
     int LastProductIdx;
@@ -25,6 +26,14 @@ public class DBManager : SingletonBase<DBManager>
     void GetProductTable()
     {
         LoadFile();
+    }
+
+    private void Update() 
+    {
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            ImportBtn.SetActive(!ImportBtn.activeSelf);
+        }    
     }
 
     void SaveFile()
@@ -154,7 +163,6 @@ public class DBManager : SingletonBase<DBManager>
             {
                 ClientList = new List<Data_Client>();
             }
-            Debug.LogError("File.Exists = " + jsonStrRead_Client);
         }
         else
         {
